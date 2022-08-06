@@ -1,8 +1,5 @@
 import BasePage from "./BasePage";
-import HomePage from "./HomePage";
-import SignInPage from "./SignInPage";
-import SignUpPage from "./SignUpPage";
-import SignUpPasswordPage from "./SignUpPasswordPage";
+import LoginPage from "./LoginPage";
 
 export default class PageFactory {
     /**
@@ -15,22 +12,10 @@ export default class PageFactory {
         let page: BasePage;
     
         switch (pageName) {
-            case 'Home':
-                page = new HomePage();
+            case 'Login':
+                page = new LoginPage();
                 break;
-    
-            case 'Sign In':
-                page = new SignInPage();
-                break;
-    
-            case 'Sign Up':
-                page = new SignUpPage();
-                break;
-
-            case 'Sign Up Password':
-                page = new SignUpPasswordPage();
-                break;
-    
+            
             default:
                 throw new Error(`"${pageName}" page not implemented yet!`);
         }

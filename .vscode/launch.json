@@ -5,9 +5,9 @@
     "console": "integratedTerminal",
     "program": "${workspaceRoot}/node_modules/cucumber/bin/cucumber-js",
     "args": [
-        "src/features/*/*.feature",
+        "src/cypress/e2e/*/*.feature",
         "-r",
-        "./src/step_definitions/*.ts",
+        "./src/cypress/step_definitions/*.ts",
         "--tags",
         "@your-tags",
         "--no-timeouts",

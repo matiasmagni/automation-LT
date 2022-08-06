@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  projectId: 'membrane-demo',
+  projectId: 'cypress-cucumber-example',
   viewportWidth: 1024,
   viewportHeight: 800,
   chromeWebSecurity: false,
