@@ -1,4 +1,5 @@
 import BasePage from "./BasePage";
+import InventoryPage from "./InventoryPage";
 import LoginPage from "./LoginPage";
 
 export default class PageFactory {
@@ -14,6 +15,10 @@ export default class PageFactory {
         switch (pageName) {
             case 'Login':
                 page = new LoginPage();
+                break;
+
+            case 'Inventory':
+                page = new InventoryPage();
                 break;
             
             default:

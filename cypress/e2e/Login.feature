@@ -2,25 +2,27 @@ Feature: Login
   As a User, I want to be able to sign into SwagLabs application.
 
   Scenario Outline: User logs into application correctly
-    Given the user has navigated to SwagLabs "Home" page
+    Given the user has navigated to SwagLabs "Login" page
     When the user inputs valid data into "Login" form
       | username | <username> |
       | password | <password> |
-    And the user clicks on "LOGIN" button
+    And the user clicks on LOGIN button
     Then the user is redirected to "Inventory" page
-    
+
     Examples:
       | username                | password     |
       | standard_user           | secret_sauce |
-      | locked_out_user         | secret_sauce |
+      #| locked_out_user         | secret_sauce |
       | problem_user            | secret_sauce |
       | performance_glitch_user | secret_sauce |
 
-
-
-
-
-
+  Scenario: A locked out user tries to login into application
+    Given the user has navigated to SwagLabs "Login" page
+    When the user inputs valid data into "Login" form
+      | username | locked_out_user |
+      | password | secret_sauce |
+    And the user clicks on LOGIN button
+    Then the user visualizes an error message: "Epic sadface: Sorry, this user has been locked out."
 
 
 

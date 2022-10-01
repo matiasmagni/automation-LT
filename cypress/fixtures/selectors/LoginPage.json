@@ -8,5 +8,6 @@
     "usernamesColumn": "#login_credentials",
     "passwordsColumn": ".login_password",
     "usernamesColumnTitle": "#login_credentials h4",
-    "passwordsColumnTitle": ".login_password h4"
+    "passwordsColumnTitle": ".login_password h4",
+    "errorMsg": "*[data-test='error']"
 }

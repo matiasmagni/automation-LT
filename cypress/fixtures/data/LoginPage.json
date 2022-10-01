@@ -25,5 +25,10 @@
         "123456",
         "654321",
         "111111"
-    ]
+    ],
+    "errorMessages": {
+        "lockedOut": "Epic sadface: Sorry, this user has been locked out.",
+        "userNameRequired": "Epic sadface: Username is required",
+        "passwordRequired": "Epic sadface: Password is required"
+    }
 }
