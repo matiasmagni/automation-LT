@@ -1,0 +1,7 @@
+{
+    "URL": "/checkout-step-one.html",
+    "title": ".title",
+    "firstName": "#first-name",
+    "lastName": "#last-name",
+    "postalCode": "#postal-code"
+}

@@ -34,6 +34,10 @@ const click = (pageName: string, elementName: string) => {
 };
 
 const clickButton = (buttonName: string) => {
+    BasePage.getButtonByName(buttonName).click();
+};
+
+const clickSubmitButton = (buttonName: string) => {
     BasePage.getSubmitButtonByName(buttonName).click();
 };
 
@@ -53,11 +57,13 @@ Given('the user has already logged into Swag Labs', (table: any) => {
     // Login steps grouping
     navigate(pageName);
     fillForm(pageName, table);
-    clickButton('Login');
+    clickSubmitButton('Login');
     verifyPageNavigation('Products');
 });
 
 When('the user clicks on {string} button', clickButton);
+
+When('the user clicks on {string} submit button', clickSubmitButton);
 
 When("the user clicks on {string} page's {string}", click);
 

@@ -6,7 +6,7 @@ Feature: Login
     When the user inputs valid data into "Login" form
       | username | <username> |
       | password | <password> |
-    And the user clicks on "Login" button
+    And the user clicks on "Login" submit button
     Then the user is redirected to "Products" page
 
     Examples:
