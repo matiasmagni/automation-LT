@@ -1,4 +1,7 @@
 {
     "URL": "/inventory.html",
-    "title": ".title"
+    "title": ".title",
+    "addProductToCartButton": "#add-to-cart-{name}",
+    "shoppingCartIcon": ".shopping_cart_link",
+    "shoppingCartBadge": ".shopping_cart_badge"
 }

@@ -1,6 +1,7 @@
 import BasePage from "./BasePage";
 import ProductsPage from "./ProductsPage";
 import LoginPage from "./LoginPage";
+import YourCartPage from "./YourCartPage";
 
 export default class PageFactory {
     /**
@@ -19,6 +20,10 @@ export default class PageFactory {
 
             case 'Products':
                 page = new ProductsPage();
+                break;
+
+            case 'Your Cart':
+                page = new YourCartPage();
                 break;
             
             default:

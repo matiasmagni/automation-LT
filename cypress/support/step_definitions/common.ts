@@ -23,14 +23,19 @@ const fillForm = (pageName: string, table: any)  => {
     const page: BasePage = PageFactory.getCurrentPageObject(pageName);
 
     for (let field of data) {
-        cy.log(field[0], page.getElement(field[0]));
         page.getElement(field[0])?.type(field[1]);
     }
 };
 
-const click = (buttonName: string) => {
+const click = (pageName: string, elementName: string) => {
+    PageFactory.getCurrentPageObject(pageName)
+        .getElement(elementName)
+        .click();
+};
+
+const clickButton = (buttonName: string) => {
     BasePage.getSubmitButtonByName(buttonName).click();
-}
+};
 
 const verifyPageNavigation = (pageName: string) => {
     const page: BasePage = PageFactory.getCurrentPageObject(pageName);
@@ -48,11 +53,13 @@ Given('the user has already logged into Swag Labs', (table: any) => {
     // Login steps grouping
     navigate(pageName);
     fillForm(pageName, table);
-    click('Login');
+    clickButton('Login');
     verifyPageNavigation('Products');
 });
 
-When('the user clicks on {string} button', click);
+When('the user clicks on {string} button', clickButton);
+
+When("the user clicks on {string} page's {string}", click);
 
 When('the user inputs valid data into {string} form', fillForm);
 

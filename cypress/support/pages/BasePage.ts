@@ -1,4 +1,4 @@
-import { camelize } from "../../utils/string";
+import { camelize, toKebabCase } from "../../utils/string";
 
 /**
  * BasePage class. All page objects must inherite from this class.
@@ -72,7 +72,7 @@ export default abstract class BasePage {
      * @returns The page's element.
      */
     public getElementBySearchParam(name: string, searchParam: string): Cypress.Chainable {
-        const selector = this.selectors[camelize(name)].replace('{name}', searchParam);
+        const selector = this.selectors[camelize(name)].replace('{name}', toKebabCase(searchParam));
         
         return cy.get(selector);
     }
