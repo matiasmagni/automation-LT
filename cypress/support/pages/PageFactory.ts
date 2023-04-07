@@ -1,6 +1,10 @@
 import BasePage from "./BasePage";
-import InventoryPage from "./InventoryPage";
+import ProductsPage from "./ProductsPage";
 import LoginPage from "./LoginPage";
+import YourCartPage from "./YourCartPage";
+import CheckoutYourInformationPage from "./CheckoutYourInformationPage";
+import CheckoutOverviewPage from "./CheckoutOverviewPage";
+import CheckoutCompletePage from "./CheckoutCompletePage";
 
 export default class PageFactory {
     /**
@@ -17,8 +21,24 @@ export default class PageFactory {
                 page = new LoginPage();
                 break;
 
-            case 'Inventory':
-                page = new InventoryPage();
+            case 'Products':
+                page = new ProductsPage();
+                break;
+
+            case 'Your Cart':
+                page = new YourCartPage();
+                break;
+
+            case 'Checkout: Your Information':
+                page = new CheckoutYourInformationPage();
+                break;
+
+            case 'Checkout: Overview':
+                page = new CheckoutOverviewPage();
+                break;
+
+            case 'Checkout: Complete!':
+                page = new CheckoutCompletePage();
                 break;
             
             default:

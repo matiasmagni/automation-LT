@@ -1,8 +1,8 @@
 {
     "URL": "/",
     "logo": ".login_logo",
-    "usernameInput": "#user-name",
-    "passwordInput": "#password",
+    "username": "#user-name",
+    "password": "#password",
     "loginButton": "#login-button",
     "loginImage": ".bot_column",
     "usernamesColumn": "#login_credentials",

@@ -1,4 +1,4 @@
-# membrane-demo
+# automation-LT
 
 Code Challenge: E2E test on the sign-in, sign-up pages and the login endpoint response.
 
@@ -65,26 +65,37 @@ stepDefinitions | `cypress/integration` when `nonGlobalStepDefinitions` is true 
 
 Put the feature files in `cypress/integration/`
 
-Example: cypress/integration/SignIn.feature
+Example: cypress/integration/Shop.feature
 
 ```gherkin
-Feature: Sign In
-  As a User, I want to be able to sign into Membrane demo.
+Feature: Shop
+  As a User, I want to be able to buy a product after being previously added to the shopping cart.
 
-  Scenario: User visualizes Sign In page correctly.
-    Given the user has navigated to Membrane Demo home page
-    Then the user is redirected to a secured URL
-    And the user is redirected to the "Sign In" page
-    And the user visualizes "Sign In" page elements correctly
-      | element              | type           | content              |
-      | Logo                 | image          | membrane logo        |
-      | Title                | text           | Sign In              |
-      | Email                | text input     | Enter your email     |
-      | Password             | password input | Insert your password |
-      | Eye Icon             | SVG image      | eye                  |
-      | Next Button          | button         | Next                 |
-      | Sign Up Link         | text link      | Sign Up              |
-      | Forgot Password Link | text link      | Forgot Password      |
+
+  Scenario Outline: User adds a product to the shopping cart and finishes the order successfully
+    Given the user has already logged into Swag Labs
+      | username | <username> |
+      | password | <password> |
+    When the user adds the "<productName>" product to the cart
+    Then the user visualizes the value 1 in the "Shopping Cart Badge"
+    When the user clicks on "Products" page's "Shopping Cart Icon"
+    Then the user is redirected to "Your Cart" page
+    And the user visualizes that the name of the item added to the cart is: "<productName>"
+    When the user clicks on "Checkout" button
+    Then the user is redirected to "Checkout: Your Information" page
+    When the user inputs valid data into "Checkout: Your Information" form
+      | First Name  | <firstName>  |
+      | LastName    | <lastName>   |
+      | Postal Code | <postalCode> |
+    And the user clicks on "Continue" submit button
+    Then the user is redirected to "Checkout: Overview" page
+    And the user visualizes that the name of the item shown on the Checkout Overview is: "<productName>"
+    When the user clicks on "Finish" button
+    Then the user is redirected to "Checkout: Complete!" page
+
+    Examples:
+      | username      | password     | productName         | firstName | lastName | postalCode |
+      | standard_user | secret_sauce | Sauce Labs Backpack | Matias    | Magni    | 5519       |
 ```
 
 ### Bundled features files
@@ -112,23 +123,26 @@ You also have to add support for `.features` files to your Cypress configuration
 
 The `.feature` file will use steps definitions from a directory with the same name as your `.feature` file. The javascript files containing the step definitions can have other names if you want to break them into different concerns.
 
-Easier to show than to explain, so, assuming the feature file is in `cypress/integration/SignIn.feature` , as proposed above, the preprocessor will read all the files inside `cypress/integration`, so:
+Easier to show than to explain, so, assuming the feature file is in `cypress/integration/Shop.feature` , as proposed above, the preprocessor will read all the files inside `cypress/integration`, so:
 
-`cypress/support/step_definitions/SignIn.js` (or any other .js file in the same path)
+`cypress/support/step_definitions/Common.js` (or any other .js file in the same path)
 
 ```javascript
 /// <reference types="Cypress" />
-import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import BasePage from "../pages/BasePage";
-import HomePage from '../pages/HomePage';
-import SignInPage from "../pages/SignInPage";
+import { Then, When } from 'cypress-cucumber-preprocessor/steps';
+import PageFactory from '../pages/PageFactory';
+import { toKebabCase } from 'cypress/utils/string';
 
-
-Given('the user has navigated to Membrane Demo home page', () => {
-  const page = new HomePage();
-  page.navigateToThisPage(60);
+When('the user adds the {string} product to the cart', (productName: string) => {
+    PageFactory.getCurrentPageObject('Products')
+        .getElementBySearchParam('addProductToCartButton', productName)?.click();
 });
-...
+
+Then('the user visualizes the value {int} in the {string}', (value: number, badgeName: string) => {
+    PageFactory.getCurrentPageObject('Products')
+        .getElement(badgeName)
+        .should('have.text', value);
+});
 ```
 
 ## How to write tests
