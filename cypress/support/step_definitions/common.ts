@@ -7,27 +7,53 @@ import NotFoundError from '../errors/NotFoundError';
 import BasePage from '../pages/BasePage';
 import PageFactory from '../pages/PageFactory';
 
-Given('the user has navigated to SwagLabs {string} page', (pageName: string) => {
+const navigate = (pageName: string) => {
     PageFactory.getCurrentPageObject(pageName).navigateToThisPage(30);
-    cy.wait(WAIT_TIME_PAGE_LOAD);
-});
+    //cy.wait(WAIT_TIME_PAGE_LOAD);
+};
 
-When('the user clicks on {string} button', (buttonName: string) => {
-    BasePage.getButtonByName(buttonName).click();
-});
-
-When('the user inputs valid data into {string} form', (pageName: string, table: any)  => {
-    const data: any = table.rowsHash();
-    //cy.log('TABLE rows:', table.rows());
-    //cy.log('TABLE hashes:', table.hashes());
-    //cy.log('TABLE raw:', table.raw());
-    //cy.log('TABLE rowsHash:', table.rowsHash());
+const fillForm = (pageName: string, table: any)  => {
+    const data: any = table.raw();
+    /*
+    cy.log('TABLE rows:', table.rows());
+    cy.log('TABLE hashes:', table.hashes());
+    cy.log('TABLE raw:', table.raw());
+    cy.log('TABLE rowsHash:', table.rowsHash());
+    */
     const page: BasePage = PageFactory.getCurrentPageObject(pageName);
-    page.getElement('usernameInput')?.type(data.username);
-    page.getElement('passwordInput')?.type(data.password);
+
+    for (let field of data) {
+        cy.log(field[0], page.getElement(field[0]));
+        page.getElement(field[0])?.type(field[1]);
+    }
+};
+
+const click = (buttonName: string) => {
+    BasePage.getSubmitButtonByName(buttonName).click();
+}
+
+const verifyPageNavigation = (pageName: string) => {
+    const page: BasePage = PageFactory.getCurrentPageObject(pageName);
+    // Verify correct URL
+    const regex = new RegExp(`${page.getUrl()}$`);
+    cy.url().should('match', regex);
+    // Verify correct title
+    page.getElement('title').should('have.text', pageName);
+};
+
+Given('the user has navigated to Swag Labs {string} page', navigate);
+
+Given('the user has already logged into Swag Labs', (table: any) => {
+    const pageName = 'Login';
+    // Login steps grouping
+    navigate(pageName);
+    fillForm(pageName, table);
+    click('Login');
+    verifyPageNavigation('Products');
 });
 
-Then('the user is redirected to {string} page', (pageName: string) => {
-    const regex = new RegExp(`${PageFactory.getCurrentPageObject(pageName).getUrl()}$`);
-    cy.url().should('match', regex);
-});
+When('the user clicks on {string} button', click);
+
+When('the user inputs valid data into {string} form', fillForm);
+
+Then('the user is redirected to {string} page', verifyPageNavigation);

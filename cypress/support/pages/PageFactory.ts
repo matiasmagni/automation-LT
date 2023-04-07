@@ -1,5 +1,5 @@
 import BasePage from "./BasePage";
-import InventoryPage from "./InventoryPage";
+import ProductsPage from "./ProductsPage";
 import LoginPage from "./LoginPage";
 
 export default class PageFactory {
@@ -17,8 +17,8 @@ export default class PageFactory {
                 page = new LoginPage();
                 break;
 
-            case 'Inventory':
-                page = new InventoryPage();
+            case 'Products':
+                page = new ProductsPage();
                 break;
             
             default:
