@@ -4,6 +4,7 @@ import LoginPage from "./LoginPage";
 import YourCartPage from "./YourCartPage";
 import CheckoutYourInformationPage from "./CheckoutYourInformationPage";
 import CheckoutOverviewPage from "./CheckoutOverviewPage";
+import CheckoutCompletePage from "./CheckoutCompletePage";
 
 export default class PageFactory {
     /**
@@ -34,6 +35,10 @@ export default class PageFactory {
 
             case 'Checkout: Overview':
                 page = new CheckoutOverviewPage();
+                break;
+
+            case 'Checkout: Complete!':
+                page = new CheckoutCompletePage();
                 break;
             
             default:
